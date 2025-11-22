@@ -1,4 +1,7 @@
 services:
+  # ===========================
+  # Backend (Express)
+  # ===========================
   - type: web
     name: pingme-backend
     env: node
@@ -18,15 +21,23 @@ services:
       - key: FRONTEND_URL
         value: https://pingme-frontend.onrender.com
 
-  - type: static_site
+  # ===========================
+  # Frontend (React Build → Served by Node)
+  # ===========================
+  - type: web
     name: pingme-frontend
+    env: node
     rootDir: frontend
     buildCommand: "npm install && npm run build"
-    staticPublishPath: build
+    startCommand: "npx serve -s build -l $PORT"
+    plan: free
     envVars:
       - key: REACT_APP_API_URL
         value: https://pingme-backend.onrender.com
 
+# ===========================
+# PostgreSQL Database
+# ===========================
 databases:
   - name: pingme-db
     plan: free
