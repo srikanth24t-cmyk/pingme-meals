@@ -1,6 +1,12 @@
+databases:
+  - name: pingme-db
+    databaseName: pingme
+    user: pingme_user
+    plan: free
+
 services:
   # ===========================
-  # Backend (Express)
+  # Backend Service
   # ===========================
   - type: web
     name: pingme-backend
@@ -11,7 +17,9 @@ services:
     plan: free
     envVars:
       - key: DATABASE_URL
-        fromDatabase: pingme-db
+        fromDatabase:
+          name: pingme-db
+          property: connectionString
       - key: TWILIO_ACCOUNT_SID
         sync: false
       - key: TWILIO_AUTH_TOKEN
@@ -22,7 +30,7 @@ services:
         value: https://pingme-frontend.onrender.com
 
   # ===========================
-  # Frontend (React Build → Served by Node)
+  # Frontend Service
   # ===========================
   - type: web
     name: pingme-frontend
@@ -34,10 +42,3 @@ services:
     envVars:
       - key: REACT_APP_API_URL
         value: https://pingme-backend.onrender.com
-
-# ===========================
-# PostgreSQL Database
-# ===========================
-databases:
-  - name: pingme-db
-    plan: free
