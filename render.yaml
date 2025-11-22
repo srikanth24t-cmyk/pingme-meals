@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: pingme-backend
+    env: node
+    rootDir: backend
+    buildCommand: "npm install"
+    startCommand: "node server.js"
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase: pingme-db
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_WHATSAPP_FROM
+        sync: false
+      - key: FRONTEND_URL
+        value: https://pingme-frontend.onrender.com
+
+  - type: static_site
+    name: pingme-frontend
+    rootDir: frontend
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://pingme-backend.onrender.com
+
+databases:
+  - name: pingme-db
+    plan: free

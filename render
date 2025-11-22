@@ -1,9 +1,0 @@
-render.yaml
-pingme-meals/
-  backend/
-    package.json
-    server.js
-  frontend/
-    package.json
-    src/
-  render.yaml
