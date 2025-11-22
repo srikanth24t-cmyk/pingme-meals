@@ -1,2 +1,8 @@
 backend/.gitkeep
 backend/package.json
+backend/server.js
+backend/controllers/orders.js
+backend/db/index.js
+backend/migrations/init.sql
+backend/utils/validator.js (if exists)
+backend/README.md
